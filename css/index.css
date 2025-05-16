@@ -1,0 +1,544 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+  width: 100%; /* Ensure dashboard takes full width */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a27;
+  overflow-x: hidden; /* Prevent horizontal scroll in main area */
+  max-width: calc(100vw - 240px); /* Account for sidebar width */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #1e1e2f;
+  border-right: 1px solid #2c2c3a;
+  padding: 30px 20px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f3f4f6;
+  font-size: 24px; /* Adjust this value to make the text bigger */
+}
+
+.logo-icon {
+  width: 50px; /* Adjust width to make the icon bigger */
+  height: auto;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  /* Increase this value for more space */
+  margin-top: 30px;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #ffffff !important;
+  font-size: 20px;
+  font-weight: 500;
+  height: 50px;
+  width: fit-content; /* Make width fit content */
+  min-width: 200px; /* Set minimum width */
+  padding: 0 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.nav-link:hover {
+  color: #ffffff !important; /* Ensure hover links have white text */
+  cursor: pointer;
+}
+
+.nav-link.active {
+  background-color: #7e36d8; /* Purple background for active link */
+  font-size: 20px;
+  font-weight: 700; /* Make text bold for active state */
+  color: #ffffff !important; /* Ensure the text stays white for active links */
+  border-radius: 8px; /* Optional: keeps the rounded corners */
+  box-shadow: 0 0 20px rgba(126, 54, 216, 0.5), 0 0 5px rgba(126, 54, 216, 0.7); /* Stronger and more distinct shadow */
+outline: 2px solid rgba(126, 54, 216, 0.8); /* Add a distinct outline for more emphasis */
+
+.nav-link:hover.active {
+  background-color: #6a28b1; /* Slightly darker purple for active link on hover */
+}
+
+.nav-link.projects {
+  background-color: #2196f3; /* Blue background for My Projects link */
+}
+
+.nav-link.settings {
+  background-color: #ff5722; /* Orange background for Settings link */
+}
+
+.nav-link:hover.projects {
+  background-color: #1976d2; /* Darker blue for hover on My Projects */
+}
+
+.nav-link:hover.settings {
+  background-color: #e64a19; /* Darker orange for hover on Settings */
+}
+
+.nav-link.active:hover {
+  background-color: #6a28b1; /* Slightly darker purple for active hover */
+}
+
+/* Remove the specific dashboard button styling */
+/* .nav-link.dashboard {
+    background-color: #7e36d8; /* Purple background */
+    padding: 0 20px;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 50px;
+    border-radius: 8px;
+} */
+
+/* .nav-link.dashboard i {
+    font-size: 18px;
+} */
+
+/* .nav-link.dashboard:hover {
+    background-color: #6a28b1;
+} */
+
+/* Top Nav */
+.top-nav {
+    display: flex;
+    justify-content: flex-end; /* Change from space-between to flex-end */
+    align-items: center;
+    padding: 20px 30px;
+    background-color: transparent; /* Remove background color */
+    border-bottom: none; /* Remove border */
+}
+
+.top-nav input[type="text"] {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #2a2a3a;
+    color: #e0e0e0;
+    width: 300px;
+}
+
+/* Update logout button styles to stand out better against transparent header */
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    height: 24px;
+    width: fit-content; /* Make width fit content */
+    background-color: #dc3545;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 14px;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-left: auto; /* Push to right side */
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+/* Content */
+.content {
+  padding: 30px;
+}
+
+.content h1 {
+  margin-bottom: 20px;
+  color: #e0e0e0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  padding: 0 20px; /* Add some padding */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.card {
+  background-color: #2a2a3a;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  cursor: pointer;
+  display: flex; /* Ensure it's a flex container */
+  flex-direction: column; /* Stack the content vertically */
+  align-items: center; /* Center align the content */
+}
+
+.card a {
+  text-decoration: none; /* Remove underline from link */
+  color: inherit; /* Inherit color from parent */
+  display: block; /* Make the entire card clickable */
+  width: 100%; /* Ensure the link takes the full width of the card */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card {
+  position: relative;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #1f1f2e;
+  color: #fff;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.delete-form {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.trash-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #bbb;
+  transition: color 0.2s ease;
+}
+
+.trash-btn:hover {
+  color: #e74c3c;
+}
+
+.delete-form {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Profile Photo Section */
+.profile-photo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-photo-container img {
+  width: 120px; /* Size of the profile image */
+  height: 120px;
+  border-radius: 50%; /* Circular image */
+  object-fit: cover;
+  cursor: pointer; /* Indicating it's clickable */
+  border: 3px solid #7e36d8; /* Purple border around the image */
+  transition: transform 0.3s;
+}
+
+.profile-photo-container img:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.change-photo-text {
+  font-size: 14px;
+  color: #6b7a99;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000; /* Increased z-index */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1e1e2f; /* White background for modal content */
+  border-radius: 12px;
+  width: 400px;
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease-out;
+  background-color: #232331; /* Soft light gray background */
+}
+
+/* Slide-in effect */
+@keyframes slideIn {
+  from {
+    transform: translate(-50%, -60%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #7e36d8; /* Purple close button */
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: #ff6363; /* Red on hover */
+}
+
+/* Account Information Styles */
+.modal-content h2 {
+  font-size: 24px;
+  color: #7e36d8; /* Purple for header */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+  font-size: 16px;
+  color: #555; /* Gray text for general info */
+  margin: 10px 0;
+}
+
+.modal-content img {
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 3px solid #7e36d8; /* Purple border around the image */
+}
+
+/* Information Labels */
+.modal-content .info-label {
+  font-weight: bold;
+  color: #b4b4b4; /* Darker color for labels */
+}
+
+.modal-content .info-value {
+  color: #e0e0e0; /* Slightly lighter gray for the values */
+  font-size: 16px;
+}
+
+/* Button Container */
+.modal-content .button-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Buttons Styling */
+.modal-content button {
+  background-color: #7e36d8; /* Purple background for buttons */
+  color: #e0e0e0; /* White text on buttons */
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100px; /* Make buttons consistent in size */
+}
+
+.modal-content button:hover {
+  background-color: #6a28b1; /* Darker purple on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+  .modal-content h2 {
+    font-size: 20px;
+  }
+  .modal-content p {
+    font-size: 14px;
+  }
+}
+
+/* Specific styling for New Project Modal */
+#projectModal {
+  display: none; /* Keep it hidden initially */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+}
+
+/* Modal content specific to New Project Modal */
+#projectModal .modal-content1 {
+  position: relative; /* Changed from absolute */
+  margin: 5% auto; /* Center modal */
+  background-color: #2a2a3a;
+  padding: 30px;
+  border-radius: 12px;
+  color: white;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  /* Center the content */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Horizontally center the content */
+  justify-content: center; /* Vertically center the content */
+}
+
+#projectModal h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+#projectModal .form-group {
+  margin-bottom: 20px;
+}
+
+#projectModal .form-group label {
+  font-weight: bold;
+}
+
+#projectModal input[type="text"],
+#projectModal textarea,
+#projectModal input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #1e1e2f;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+#projectModal textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+#projectModal .button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #5d5fef;
+  color: white;
+  text-align: center;
+  text-decoration: none; /* Prevent link underline */
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds some shadow to make it pop */
+}
+
+.button:hover {
+  background-color: #4b4de0;
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.button:active {
+  background-color: #3d3fd8; /* Darker shade when clicked */
+}
+
+#projectModal .cancel-btn1 {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #5d5fef;
+  color: white;
+  text-align: center;
+  text-decoration: none; /* Prevent link underline */
+  border-radius: 8px;
+  font-weight: bolder;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds some shadow to make it pop */
+}
+
+#projectModal .cancel-btn1:hover {
+  background-color: #4b4de0;
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+#projectModal .close-btn1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.card .add-icon {
+    color: #7e36d8;
+    font-size: 24px;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .add-icon {
+    transform: scale(1.2);
+    color: #6a28b1;
+}

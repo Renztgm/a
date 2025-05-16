@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" href="../img/logo.svg" type="image/svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Advanced CMS Page Editor</title>
   <style>
