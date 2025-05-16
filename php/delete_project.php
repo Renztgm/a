@@ -1,23 +1,24 @@
 <?php
-include('db.php'); // or whatever your connection file is
+session_start();
+require 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['project_id'])) {
-    $project_id = $_POST['project_id'];
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'message' => 'Not logged in']);
+    exit();
+}
 
-    // Delete the page from the database
-    $stmt = $conn->prepare("DELETE FROM projects WHERE project_id = ?");
-    $stmt->bind_param("i", $project_id);
+$data = json_decode(file_get_contents('php://input'), true);
 
+if (isset($data['id'])) {
+    $stmt = $conn->prepare("DELETE FROM projects WHERE id = ? AND user_id = ?");
+    $stmt->bind_param("ii", $data['id'], $_SESSION['user_id']);
+    
     if ($stmt->execute()) {
-        // Redirect back after deletion
-        header("Location: index.php"); // Change this to your actual page
-        exit();
+        echo json_encode(['success' => true]);
     } else {
-        echo "Error deleting page.";
+        echo json_encode(['success' => false, 'message' => 'Delete failed']);
     }
-
-    $stmt->close();
 } else {
-    echo "Invalid request.";
+    echo json_encode(['success' => false, 'message' => 'Invalid request']);
 }
 ?>

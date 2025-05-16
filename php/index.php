@@ -58,68 +58,33 @@ require 'db.php';
             <i class="fas fa-plus add-icon"></i>
           </a>
 
-          <!-- Modal Structure -->
-          <div class="modal" id="projectModal">
-            <div class="modal-content1">
-              <span class="close-btn1" id="closeModalBtn">&times;</span>
-              <h2>Create New Project</h2>
-              <form action="save_project.php" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="title">Project Title</label>
-                  <input type="text" id="title" name="title" placeholder="Enter project name" required>
-                </div>
-
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea id="description" name="description" placeholder="Describe your project"></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label for="image">Upload Featured Image</label>
-                  <input type="file" name="logo" accept="image/*" required>
-                </div>
-
-                <div class="button-group">
-                  <button type="submit" class="button">Create Project</button>
-                  <button type="button" class="cancel-btn1" id="close-btn">Cancel</button>
-                </div>
-              </form>
-            </div>
-          </div>
-
+          <!-- Display Existing Projects -->
           <?php
-            $result = $conn->query("SELECT * FROM projects ORDER BY created_at DESC");
-                    if ($result->num_rows > 0) {
-                      while ($row = $result->fetch_assoc()) {
-                        echo "<a href='project-editor.php?id={$row['project_id']}'>";
-                        echo "<div class='card'>";
-                        
-                        // 🗑️ Delete form
-                        echo "<form action='delete_project.php' class='delete-form' method='POST' onsubmit='return confirm(\"Are you sure you want to delete this page?\");'>";
-                        echo "<input type='hidden' name='project_id' value='{$row['project_id']}'>";
-                        echo "<button type='submit' class='buttonbox' style='cursor:pointer;'>🗑️</button>";
-                        echo "</form>";
+          $stmt = $conn->prepare("SELECT id, title, content, created_at FROM projects WHERE user_id = ? ORDER BY created_at DESC");
+          $stmt->bind_param("i", $_SESSION['user_id']);
+          $stmt->execute();
+          $result = $stmt->get_result();
 
-                          
-                          echo "<div class='contentCreatedBox'>"; 
-                          echo "<img src='{$row['logo']}' width='50'><br>";
-                          echo "</div>";
-                           
-                          echo "<p><b>{$row['name']}</b></p>";
-                          echo "<p>- {$row['description']}</p>";
-                        echo "</div>";
-                        echo "</a>";
-                      }
-                    } else {
-                      echo "<div style='text-align:center; padding: 50px; width: 100%;'>";
-                      echo "<h3>No pages created yet.</h3>";
-                      // echo "<button onclick='openModal()' style='padding: 10px 20px; background-color: #7e36d8; color: white; border: none; border-radius: 5px; cursor: pointer;'>Create a website now!</button>";
-                      echo "</div>";
-                    }
-                  ?>
-            <!-- </form> -->
-
-
+          while ($project = $result->fetch_assoc()): ?>
+            <div class="card project-card">
+              <div class="card-header">
+                <h3><?php echo htmlspecialchars($project['title']); ?></h3>
+                <span class="date"><?php echo date('M j, Y', strtotime($project['created_at'])); ?></span>
+              </div>
+              <div class="card-actions">
+                <a href="website-builder.php?project=<?php echo $project['id']; ?>" class="edit-btn">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="preview.php?project=<?php echo $project['id']; ?>" class="preview-btn" target="_blank">
+                  <i class="fas fa-eye"></i> Preview
+                </a>
+                <button class="delete-btn" onclick="deleteProject(<?php echo $project['id']; ?>)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          <?php endwhile; ?>
+        </div>
       </main>
 
 <!-- Modal (Account Information) -->
